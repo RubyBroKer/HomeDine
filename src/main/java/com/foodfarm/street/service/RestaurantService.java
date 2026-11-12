@@ -15,5 +15,5 @@ public interface RestaurantService {
     public List<RestaurantDTO> getRestaurantByName(String name, Integer page, Integer size) throws RestaurantException;
     public RestaurantDTO getRestaurantById(Integer restaurant_id) throws RestaurantException;
     public RestaurantDTO getRestaurantMenu(Integer restaurant_id) throws RestaurantException;
-    
+    public RestaurantDTO addRestaurant(RestaurantDTO restaurantDTO) throws RestaurantException;
 }
