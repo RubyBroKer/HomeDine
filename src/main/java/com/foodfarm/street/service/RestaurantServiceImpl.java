@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.foodfarm.street.entity.Restaurant;
@@ -18,6 +20,7 @@ import jakarta.transaction.Transactional;
 
 @Service (value = "restaurant_service")
 @Transactional 
+@CacheConfig (cacheNames = "customer")
 public class RestaurantServiceImpl implements RestaurantService {
     
     @Autowired 
@@ -29,6 +32,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override 
+    @Cacheable ()
     public List<RestaurantDTO> getAllRestaurants(Integer page, Integer size) throws RestaurantException{
 
         List<Restaurant> restaurants = repository.getAllRestaurants(page, size).getContent();
