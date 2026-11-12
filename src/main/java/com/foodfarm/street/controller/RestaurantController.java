@@ -30,7 +30,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurant/{restaurantId}")
-    public ResponseEntity<RestaurantDTO> getRestaurantById(@PathVariable String restaurantId) throws RestaurantException{
+    public ResponseEntity<RestaurantDTO> getRestaurantById(@PathVariable Integer restaurantId) throws RestaurantException{
         RestaurantDTO restaurantDTO = restaurantService.getRestaurantById(restaurantId);
         return new ResponseEntity<>(restaurantDTO, HttpStatus.OK);
     }
