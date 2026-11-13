@@ -27,8 +27,11 @@ public class OrderServiceImpl implements OrderService{
     @Autowired 
     private OrderRepository orderRepository;
 
-    @Autowired 
-    private OrderProducer orderProducer;
+    private final OrderProducer orderProducer;
+
+    OrderServiceImpl(OrderProducer orderProducer) {
+        this.orderProducer = orderProducer;
+    }
 
     @Override 
     public OrderDTO getOrderById(Integer order_id) throws OrderException
@@ -36,12 +39,6 @@ public class OrderServiceImpl implements OrderService{
         Optional<Order> optional = orderRepository.findById(order_id);
         Order order = optional.orElseThrow(() -> new OrderException("Service.Customer not found"));
         return modelMapper.map(order, OrderDTO.class);
-    }
-
-    @Override 
-    public List<OrderDTO> getAllOrdersByCustomer(Integer customer_id) throws OrderException{
-        List<Order> iterable = orderRepository.findByCustomer_id(customer_id);
-        return modelMapper.map(iterable, new TypeToken<List<OrderDTO>>(){}.getType());
     }
 
     @Override 
