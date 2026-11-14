@@ -3,7 +3,7 @@ package com.foodfarm.street.dto;
 import lombok.Data;
 
 @Data 
-public class Items {
+public class ItemDTO {
     private Integer itemId;
     private String itemName;
     private String category;

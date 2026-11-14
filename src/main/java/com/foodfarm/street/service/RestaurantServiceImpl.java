@@ -10,11 +10,14 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import com.foodfarm.street.entity.Item;
 import com.foodfarm.street.entity.Restaurant;
 import com.foodfarm.street.dto.RestaurantDTO;
 import com.foodfarm.street.exception.RestaurantException;
 import com.foodfarm.street.kafka.RestaurantEvent;
 import com.foodfarm.street.kafka.RestaurantProducer;
+import com.foodfarm.street.repository.ItemRepository;
 import com.foodfarm.street.repository.RestaurantRepository;
 import com.google.gson.reflect.TypeToken;
 import jakarta.transaction.Transactional;
@@ -30,6 +33,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired 
     private RestaurantProducer restaurantProducer;
+
+    @Autowired 
+    private ItemRepository itemRepository;
 
     @Autowired 
     private Environment environment;
@@ -64,7 +70,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override 
     public RestaurantDTO getRestaurantMenu(Integer restaurant_id) throws RestaurantException{
-        Optional<Restaurant> restaurant = repository.findById(restaurant_id);
+        Optional<Restaurant> restaurant = repository.findRestaurantWithItems(restaurant_id);
         return modelMapper.map(restaurant, RestaurantDTO.class);
     }
 
@@ -72,12 +78,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     public RestaurantDTO addRestaurant(RestaurantDTO restaurantDTO) throws RestaurantException{
         Restaurant restaurant = modelMapper.map(restaurantDTO, Restaurant.class);
         restaurant = repository.save(restaurant);
-        restaurantDTO.setRestraurant_id(restaurant.getRestraurant_id());
+        restaurantDTO.setRestaurantId(restaurant.getRestaurantId());
 
         RestaurantEvent restaurantEvent = new RestaurantEvent(
-            restaurant.getRestraurant_id(),
+            restaurant.getRestaurantId(),
             "Restaurant Added",
-            restaurant.getPhone_number(),
+            restaurant.getPhoneNumber(),
             Instant.now()
         );
 

@@ -3,8 +3,6 @@ import jakarta.persistence.GenerationType;
 
 import java.util.List;
 
-import com.foodfarm.street.dto.Items;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,22 +13,22 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data  
+@Data 
 @Table (name = "restaurants")
 public class Restaurant {
     
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer restraurant_id;
+    private Integer restaurantId;
 
-    private String restraurant_name;
+    private String restaurantName;
 
     private String address;
 
-    private String phone_number;
+    private String phoneNumber;
 
     @OneToMany (cascade = CascadeType.ALL)
-    @JoinColumn (name = "restraurant_id")
-    private List<Items> items;
+    @JoinColumn (name = "restaurant_id")
+    private List<Item> items;
 
 }

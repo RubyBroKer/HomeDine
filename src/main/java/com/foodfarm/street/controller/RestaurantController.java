@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -35,9 +37,14 @@ public class RestaurantController {
         return new ResponseEntity<>(restaurantDTO, HttpStatus.OK);
     }
 
-    @GetMapping("path")
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    @PostMapping("/")
+    public ResponseEntity<RestaurantDTO> addRestaurant(
+            @RequestBody RestaurantDTO restaurantDTO) throws RestaurantException {
+
+        RestaurantDTO savedRestaurant =
+                restaurantService.addRestaurant(restaurantDTO);
+
+        return new ResponseEntity<>(savedRestaurant, HttpStatus.CREATED);
     }
     
     

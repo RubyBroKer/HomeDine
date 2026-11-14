@@ -25,7 +25,6 @@ public class ExceptionControllerAdvice {
         LOGGER.error(restaurantException.getMessage(), restaurantException);
 
         ErrorInfo errorInfo = new ErrorInfo();
-
         errorInfo.setErrorCode(HttpStatus.BAD_REQUEST.value());
         errorInfo.setErrorMessage(restaurantException.getMessage());
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);

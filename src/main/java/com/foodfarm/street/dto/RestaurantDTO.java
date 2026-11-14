@@ -8,17 +8,17 @@ import lombok.Data;
 
 @Data 
 public class RestaurantDTO {
-    private Integer restraurant_id;
+    private Integer restaurantId;
 
     @NotNull (message = "Please provide a name")
-    private String restraurant_name;
+    private String restaurantName;
 
     @NotNull (message = "Please provide an address")
     private String address;
 
     @NotNull (message = "Please provide a phone numer")
-    private String phone_number;
+    private String phoneNumber;
 
     @Valid 
-    private List<Items> items;
+    private List<ItemDTO> items;
 }
